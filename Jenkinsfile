@@ -2,6 +2,12 @@ node {
     stage("Checkout GITHUB") {
         checkout scm
     }
+    stage("Test using JUNIT testing") {
+        sh "mvn test"
+    }
+    stage("Build using Maven") {
+        sh "mvn clean package"
+    }
     stage("Create Docker image") {
         sh "docker build -t sanjaikumar1one/movie-rating:latest ."
     }
@@ -10,11 +16,5 @@ node {
             sh "echo $PASS | docker login -u $USER --password-stdin"
             sh "docker push sanjaikumar1one/movie-rating:latest"
         }
-    }
-    stage("Create Cluster in Kubernetes") {
-        sh "kubectl apply -f deployment.yaml"
-    }
-    stage("Show deployed application") {
-        sh "kubectl get svc movie-service"
     }
 }
