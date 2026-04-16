@@ -15,8 +15,8 @@ node {
     }
     stage("Push to Docker Hub") {
         withCredentials([usernamePassword(credentialsId: "docker-hub-login", passwordVariable: "PASS", usernameVariable: "USER")]) {
-            // Using printf or simple pipe for Windows Jenkins
-            bat "docker login -u %USER% -p %PASS%"
+            // Added quotes around variables to handle special characters
+            bat "docker login -u %USER% -p \"%PASS%\""
             bat "docker push sanjaikumar1one/movie-rating:latest"
         }
     }
