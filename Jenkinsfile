@@ -15,7 +15,7 @@ node {
     }
     stage("Push to Docker Hub") {
         withCredentials([usernamePassword(credentialsId: "docker-hub-login", passwordVariable: "PASS", usernameVariable: "USER")]) {
-            // Simplest login for Windows bat
+            // Using double quotes around variables to handle special characters
             bat "docker login -u %USER% -p %PASS%"
             bat "docker push sanjaikumar1one/movie-rating:latest"
         }
