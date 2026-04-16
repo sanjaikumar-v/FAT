@@ -9,7 +9,10 @@ node {
         bat "mvn clean package"
     }
     stage("Create Docker image") {
-        bat "docker build -t sanjaikumar1one/movie-rating:latest ."
+        // Setting DOCKER_BUILDKIT=0 avoids the INTERNAL_ERROR
+        withEnv(["DOCKER_BUILDKIT=0"]) {
+            bat "docker build -t sanjaikumar1one/movie-rating:latest ."
+        }
     }
     stage("Push to Docker Hub") {
         withCredentials([usernamePassword(credentialsId: "docker-hub-login", passwordVariable: "PASS", usernameVariable: "USER")]) {
