@@ -1,4 +1,4 @@
-﻿node {
+node {
     stage("Checkout GITHUB") {
         checkout scm
     }
