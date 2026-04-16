@@ -15,7 +15,7 @@ node {
     }
     stage("Push to Docker Hub") {
         withCredentials([usernamePassword(credentialsId: "docker-hub-login", passwordVariable: "PASS", usernameVariable: "USER")]) {
-            // This is the most stable way for Windows Jenkins to login
+            // Simplest login for Windows bat
             bat "docker login -u %USER% -p %PASS%"
             bat "docker push sanjaikumar1one/movie-rating:latest"
         }
