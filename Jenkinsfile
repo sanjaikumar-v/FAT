@@ -9,7 +9,6 @@ node {
         bat "mvn clean package"
     }
     stage("Create Docker image") {
-        // Setting DOCKER_BUILDKIT=0 avoids the INTERNAL_ERROR
         withEnv(["DOCKER_BUILDKIT=0"]) {
             bat "docker build -t sanjaikumar1one/movie-rating:latest ."
         }
@@ -19,5 +18,11 @@ node {
             bat "echo %PASS% | docker login -u %USER% --password-stdin"
             bat "docker push sanjaikumar1one/movie-rating:latest"
         }
+    }
+    stage("Create Cluster in Kubernetes") {
+        bat "kubectl apply -f deployment.yaml"
+    }
+    stage("Show deployed application") {
+        bat "kubectl get svc movie-service"
     }
 }
