@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: movie-rating
-        image: sanjaikumar1one /movie-rating:latest
+        image: sanjaikumar1one/movie-rating:latest
         ports:
         - containerPort: 80
 ---
